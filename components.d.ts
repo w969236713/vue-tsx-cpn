@@ -9,9 +9,11 @@ declare module 'vue' {
   export interface GlobalComponents {
     ApiSelect: typeof import('./src/components/api-select/src/ApiSelect.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
+    EllipsisText: typeof import('./src/components/ellipsis-text/src/EllipsisText.vue')['default']
     ElOption: typeof import('element-plus/es')['ElOption']
     ElSelect: typeof import('element-plus/es')['ElSelect']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Tooltip: typeof import('./src/components/ellipsis-text/src/Tooltip.vue')['default']
   }
 }

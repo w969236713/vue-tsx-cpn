@@ -132,8 +132,8 @@ export default defineComponent({
     return () => {
       return (
         <el-select
-          {...attrs}
           {...props}
+          {...unref(attrs)}
           v-model={selectValue.value}
           ref={selectRef}
           remote-method={(t: string) => fetch(t)}

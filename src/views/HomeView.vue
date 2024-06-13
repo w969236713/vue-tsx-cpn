@@ -2,6 +2,7 @@
 import ApiSelect from '@/components/api-select/src/ApiSelect.vue'
 import { getSelectOption } from '@/api/select-option'
 import { ref } from 'vue'
+import EllipsisText from '@/components/ellipsis-text/src/EllipsisText.vue'
 
 const apiSelectRef = ref()
 const selectVal = ref()
@@ -24,4 +25,9 @@ const selectVal = ref()
     style="width: 440px"
     value-field="phone"
   />
+  <div>
+    <EllipsisText :expand="true" :line="1" :max-width="100">
+      国家城市和地区国家城市和地区国家城市和地区国家城市和地区国家城市和地区
+    </EllipsisText>
+  </div>
 </template>
