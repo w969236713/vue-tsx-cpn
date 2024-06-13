@@ -14,6 +14,7 @@ declare module 'vue' {
     ElSelect: typeof import('element-plus/es')['ElSelect']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SvgIcon: typeof import('./src/components/svg-icon/src/SvgIcon.vue')['default']
     Tooltip: typeof import('./src/components/ellipsis-text/src/Tooltip.vue')['default']
   }
 }
