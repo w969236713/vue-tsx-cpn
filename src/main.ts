@@ -1,6 +1,7 @@
+import '@/design/style/index.scss'
+
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
 import App from './App.vue'
 import router from './router'
 import { setupI18n } from '@/locales/setupI18n'
@@ -16,4 +17,4 @@ async function bootstrap() {
   app.mount('#app')
 }
 
-bootstrap()
+bootstrap().catch()
