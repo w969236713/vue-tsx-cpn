@@ -7,6 +7,7 @@ import { get, isFunction, omit } from 'lodash-es'
 type OptionsItem = { label?: string; value?: string; disabled?: boolean; [name: string]: any }
 
 const apiSelectProps = {
+  ...SelectProps,
   modelValue: propTypes.any.def([] || ''),
   numberToString: propTypes.bool,
   api: {
@@ -35,7 +36,7 @@ const apiSelectProps = {
 }
 export default defineComponent({
   name: 'ApiSelect',
-  props: { ...apiSelectProps, ...SelectProps },
+  props: apiSelectProps,
   inheritAttrs: false,
   emits: ['update:modelValue', 'update:options'],
   setup(props, { slots, expose, emit }) {

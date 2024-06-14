@@ -1,46 +1,88 @@
-<script lang="ts" setup>
-import ApiSelect from '@/components/api-select/src/ApiSelect.vue'
-import { getSelectOption } from '@/api/select-option'
-import { ref } from 'vue'
-import EllipsisText from '@/components/ellipsis-text/src/EllipsisText.vue'
-import { useMessage } from '@/hooks/web/useMessage'
+<script lang="tsx" setup>
 import { useBem } from '@/hooks/web/useBem'
-
-const apiSelectRef = ref()
-const selectVal = ref()
+import ApiSelect from '@/components/api-select/src/ApiSelect.vue'
+import { reactive, ref } from 'vue'
+import SchemaTable from '@/components/schema-table/src/SchemaTable.vue'
+import type { ColumnProps } from '@/components/schema-table/interface'
+import { getSelectOption } from '@/api/select-option'
 
 const ns = useBem('home')
 
-const createMessage = () => {
-  useMessage().createAlert({ message: '确认啊', title: `我是标题啊` })
+const cityCodes = ref()
+const columns: ColumnProps[] = reactive([
+  {
+    type: 'selection',
+    prop: '',
+    isShow: true
+  },
+  {
+    prop: 'cell',
+    label: '电话',
+    fixed: true,
+    isShow: true
+  },
+  {
+    prop: 'email',
+    label: '邮箱',
+    isShow: true
+  },
+  {
+    prop: 'nat',
+    label: 'nat',
+    isShow: true
+  },
+  {
+    prop: 'login.md5',
+    label: 'md5',
+    isShow: true,
+    showOverflowTooltip: true
+  },
+  {
+    prop: '',
+    label: '操作',
+    isShow: true,
+    fixed: 'right',
+    render: () => (
+      <div>
+        <el-button link type="primary" size="small">
+          Detail
+        </el-button>
+        <el-button link type="primary" size="small">
+          Edit
+        </el-button>
+      </div>
+    )
+  }
+])
+
+const tableRef = ref()
+const handleButton = () => {
+  console.log('tableRef.value?.getSelectionRows()', tableRef.value?.selectedListIds)
 }
 </script>
 <template>
   <div :class="ns.b()">
-    <div :class="ns.e('header')">我是header</div>
+    <div :class="ns.e('header')">
+      <ApiSelect v-model="cityCodes" />
+    </div>
     <div :class="ns.e('main')">
-      <EllipsisText :max-width="100" style="vertical-align: middle"> 国家： </EllipsisText>
-      <ApiSelect
-        ref="apiSelectRef"
-        v-model="selectVal"
-        :after-fetch="(r) => r.data.results"
-        :api="getSelectOption"
-        :clearable="true"
-        :filterable="true"
-        :multiple="true"
-        :params="{ results: 100 }"
-        :remote="true"
-        label-field="email"
-        placeholder="Select"
-        remote-field="fuzzName"
-        size="large"
-        style="width: 440px"
-        value-field="phone"
-      />
+      <div :class="ns.e('sidebar')">
+        <el-button @click="handleButton"> 获取数据 </el-button>
+      </div>
+      <div :class="ns.e('content')">
+        <SchemaTable
+          ref="tableRef"
+          :after-fetch="(r) => r.data?.results"
+          :api="getSelectOption"
+          :border="true"
+          :columns="columns"
+          :params="{ results: 100 }"
+          height="100%"
+          row-key="cell"
+        />
+      </div>
     </div>
   </div>
-  <br />
-  <ElButton @click="createMessage"> create </ElButton>
 </template>
 <style lang="scss">
 $prefixCls: 'plc-home';
@@ -51,6 +93,13 @@ $prefixCls: 'plc-home';
     background: aqua;
   }
   &__main {
+    display: grid;
+    grid-template-columns: 1fr 9fr;
+  }
+  &__sidebar {
+    background: aliceblue;
+  }
+  &__content {
     height: calc(100vh - 64px);
   }
 }

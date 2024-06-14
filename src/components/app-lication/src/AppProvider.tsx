@@ -1,6 +1,6 @@
 import { defineComponent, toRefs } from 'vue'
 import { createAppProviderContext } from './useAppContext'
-import { prefixCls } from '@/config/app-config.ts'
+import { prefixCls } from '@/config/app-config'
 
 const props = {
   prefixCls: { type: String, default: prefixCls }

@@ -1,1 +1,3 @@
-export const prefixCls = 'plc'
+const prefixCls = 'plc'
+
+export { prefixCls }
