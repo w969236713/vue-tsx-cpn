@@ -2,21 +2,21 @@
 import { defineComponent, type PropType, ref, unref } from 'vue'
 import TableColumn from '@/components/schema-table/src/TableColumn.vue'
 import type { ColumnProps } from '@/components/schema-table/interface'
-import { default as defaultProps } from 'element-plus/es/components/table/src/table/defaults.mjs'
 import { propTypes } from '@/utils/propTypes'
 import { ElTable } from 'element-plus'
 import { useSelection } from '@/components/schema-table/hooks/useSelection'
 import { useTable } from '@/components/schema-table/hooks/useTable'
 import { useBem } from '@/hooks/web/useBem'
-
-export const ProTableProps = {
+import _default from 'element-plus/es/components/table/src/table/defaults.mjs'
+const SchemaTableProps = {
   columns: [] as PropType<ColumnProps[]>, // 列配置项  ==> 必传
   source: [] as PropType<unknown[]>,
   api: {
     type: Function as PropType<(arg?: any) => Promise<unknown[] | Recordable<any>>>,
     default: null
   },
-  params: propTypes.any.def({}),
+  initParams: propTypes.any.def({}),
+  tableParams: propTypes.any.def({}),
   immediate: propTypes.bool.def(true),
   alwaysLoad: propTypes.bool.def(false),
   beforeFetch: {
@@ -28,15 +28,17 @@ export const ProTableProps = {
     default: null
   },
   pagination: {
-    // 是否需要分页组件 ==> 非必传（默认为true）
     type: Boolean,
     default: true
   }
 }
+
+const props = { ...SchemaTableProps, ..._default}
+
 export default defineComponent({
   name: 'SchemaTable',
   inheritAttrs: false,
-  props: { ...ProTableProps, ...defaultProps },
+  props: props,
   setup(props, { slots, attrs, expose }) {
     const ns = useBem('page')
     // table 实例
@@ -45,8 +47,7 @@ export default defineComponent({
     const { selectionChange, selectedList, selectedListIds, isSelected } = useSelection(props.rowKey as string)
 
     // 表格操作 Hooks
-    const { tableData, pageable, loading, searchParam, searchInitParam, fetch, search, reset, handleSizeChange, handleCurrentChange } =
-      useTable(props)
+    const { tableData, pageable, loading, fetch, search, reset, handleSizeChange, handleCurrentChange } = useTable(props)
 
     props.immediate && fetch()
 
@@ -55,8 +56,6 @@ export default defineComponent({
         selectedList,
         selectedListIds,
         isSelected,
-        searchParam,
-        searchInitParam,
         fetch,
         search,
         reset
@@ -81,7 +80,8 @@ export default defineComponent({
           >
             {{
               default: props?.columns?.map((column) => <TableColumn column={column} />),
-              ...slots
+              append: slots?.append?.(),
+              empty: slots?.empty?.()
             }}
           </el-table>
           {props.pagination && (
@@ -108,8 +108,6 @@ $prefixCls: 'plc-page';
 .#{$prefixCls} {
   box-sizing: border-box;
   display: grid;
-  height: 100%;
-  padding: 16px;
   grid-template-columns: 1fr;
   grid-template-rows: 9fr 1fr;
 

@@ -1,6 +1,6 @@
 import type { Ref, VNode } from 'vue'
 import type { TableColumnCtx } from 'element-plus/es/components/table/src/table-column/defaults'
-
+import SchemaTable from '../src/SchemaTable.vue'
 export interface EnumProps {
   label?: string // 选项框显示的文字
   value?: string | number | boolean | any[] // 选项框值
@@ -53,3 +53,5 @@ export interface ColumnProps<T = any>
   render?: (scope: RenderScope<T>) => VNode | string // 自定义单元格内容渲染（tsx语法）
   _children?: ColumnProps<T>[] // 多级表头
 }
+
+export type SchemaTableInstance = InstanceType<typeof SchemaTable>
