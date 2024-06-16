@@ -1,11 +1,6 @@
 <script lang="tsx" setup>
 import { useSlots } from 'vue'
-import type {
-  ColumnProps,
-  HeaderRenderScope,
-  RenderScope,
-  TypeProps
-} from '@/components/schema-table/interface'
+import type { ColumnProps, HeaderRenderScope, RenderScope, TypeProps } from '@/components/schema-table/types'
 import { handleProp, handleRowAccordingToProp } from '../utils/index'
 
 defineProps<{ column: ColumnProps }>()
@@ -32,8 +27,7 @@ const RenderTableColumn = (item: ColumnProps) => {
             },
             header: (scope: HeaderRenderScope<any>) => {
               if (item.headerRender) return item.headerRender(scope)
-              if (slots[`${handleProp(item.prop!)}Header`])
-                return slots[`${handleProp(item.prop!)}Header`]!(scope)
+              if (slots[`${handleProp(item.prop!)}Header`]) return slots[`${handleProp(item.prop!)}Header`]!(scope)
               return item.label
             }
           }}

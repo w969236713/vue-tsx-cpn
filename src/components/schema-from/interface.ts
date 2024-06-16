@@ -1,7 +1,7 @@
-import { type TSchemaFormItemProps } from '@/components/schema-from/src/SchemaFormItem.vue'
+import type { TSchemaFormItem } from '@/components/schema-from/src/SchemaFormItem.vue'
 
 export interface RenderCallbackParams {
-  schema: TSchemaFormItemProps
+  schema: TSchemaFormItem
   values: Recordable
   model: Recordable
   field: string

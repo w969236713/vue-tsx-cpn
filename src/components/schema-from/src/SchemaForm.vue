@@ -1,11 +1,11 @@
 <script lang="tsx">
 import { defineComponent } from 'vue'
-import { type TSchemaFormItemProps } from '@/components/schema-from/src/SchemaFormItem.vue'
 import { formProps } from 'element-plus'
+import type { TSchemaFormItem } from '@/components/schema-from/src/SchemaFormItem.vue'
 
 const schemaFormProps = {
   schemas: {
-    type: Object as PropType<TSchemaFormItemProps[]>
+    type: Object as PropType<TSchemaFormItem[]>
   }
 }
 const propsType = { ...formProps, ...schemaFormProps }
@@ -19,7 +19,7 @@ export default defineComponent({
   setup(props, { attrs }) {
     return () => (
       <el-form {...attrs} {...props}>
-        {props.schemas?.map((i: TSchemaFormItemProps) => <schema-form-item {...i} />)}
+        {props.schemas?.map((i: TSchemaFormItem) => <schema-form-item {...i} />)}
       </el-form>
     )
   }

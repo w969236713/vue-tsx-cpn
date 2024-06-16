@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { PaginationProps } from '@/components/schema-table/interface/pagination'
+import type { PaginationProps } from '@/components/schema-table/types/pagination'
 
 defineProps<PaginationProps>()
 </script>

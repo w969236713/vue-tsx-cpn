@@ -1,5 +1,5 @@
 <script lang="tsx">
-import { defineComponent } from 'vue'
+import { defineComponent, type ExtractPublicPropTypes } from 'vue'
 import { formItemProps } from 'element-plus/es/components/form/src/form-item'
 
 const SchemaFormItemProps = {
@@ -40,8 +40,8 @@ const SchemaFormItemProps = {
 }
 
 const props = { ...formItemProps, ...SchemaFormItemProps }
+export type TSchemaFormItem = ExtractPublicPropTypes<typeof props>
 
-export type TSchemaFormItemProps = typeof props
 export default defineComponent({
   name: 'SchemaFormItem',
   inheritAttrs: false,

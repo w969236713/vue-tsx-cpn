@@ -132,17 +132,9 @@ export default defineComponent({
 
     return () => {
       return (
-        <el-select
-          {...props}
-          {...unref(attrs)}
-          v-model={selectValue.value}
-          ref={selectRef}
-          remote-method={(t: string) => fetch(t)}
-        >
+        <el-select {...props} {...unref(attrs)} v-model={selectValue.value} ref={selectRef} remote-method={(t: string) => fetch(t)}>
           {{
-            default: getOptions.value?.map((i) => (
-              <el-option key={i.value} label={i.label} value={i.value} />
-            )),
+            default: () => getOptions.value?.map((i) => <el-option key={i.value} label={i.label} value={i.value} />),
             ...slots
           }}
         </el-select>

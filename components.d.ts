@@ -9,6 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     ApiSelect: typeof import('./src/components/api-select/src/ApiSelect.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
     ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']

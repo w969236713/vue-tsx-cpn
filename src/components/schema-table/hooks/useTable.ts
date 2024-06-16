@@ -1,8 +1,8 @@
 import { reactive, toRefs, unref } from 'vue'
 import { isFunction } from 'lodash-es'
-import type { Pageable } from '@/components/schema-table/interface/pagination'
-import type { SchemaTableInstance } from '../interface'
-export const useTable = (props:SchemaTableInstance['$props']) => {
+import type { SchemaTableInstance } from '../types'
+
+export const useTable = (props: SchemaTableInstance['$props']) => {
   const state = reactive({
     loading: false,
     isFirstLoaded: false,
@@ -29,32 +29,25 @@ export const useTable = (props:SchemaTableInstance['$props']) => {
     try {
       state.loading = true
 
+      params = Object.assign({}, params, unref(initParams))
+
       if (beforeFetch && isFunction(beforeFetch)) {
         params = (await beforeFetch(params)) || params
       }
 
-      params = Object.assign({}, params, unref(initParams))
-
       let res = await api(params)
+
       if (afterFetch && isFunction(afterFetch)) {
         res = (await afterFetch(res)) || res
       }
 
-      if (pagination) {
-        const { pageNum, pageSize, total } = res
-        updatePageable({ pageNum, pageSize, total })
-      }
-      state.tableData = res
+      state.tableData = res as any
       state.isFirstLoaded = true
     } catch (error) {
       state.isFirstLoaded = false
     } finally {
       state.loading = false
     }
-  }
-
-  const updatePageable = (pageable: Pageable) => {
-    Object.assign(state.pageable, pageable)
   }
 
   const search = async () => {

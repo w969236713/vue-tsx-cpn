@@ -1,13 +1,14 @@
 <script lang="tsx">
 import { defineComponent, type PropType, ref, unref } from 'vue'
 import TableColumn from '@/components/schema-table/src/TableColumn.vue'
-import type { ColumnProps } from '@/components/schema-table/interface'
+import type { ColumnProps } from '@/components/schema-table/types'
 import { propTypes } from '@/utils/propTypes'
 import { ElTable } from 'element-plus'
 import { useSelection } from '@/components/schema-table/hooks/useSelection'
 import { useTable } from '@/components/schema-table/hooks/useTable'
 import { useBem } from '@/hooks/web/useBem'
 import _default from 'element-plus/es/components/table/src/table/defaults.mjs'
+
 const SchemaTableProps = {
   columns: [] as PropType<ColumnProps[]>, // 列配置项  ==> 必传
   source: [] as PropType<unknown[]>,
@@ -33,7 +34,7 @@ const SchemaTableProps = {
   }
 }
 
-const props = { ...SchemaTableProps, ..._default}
+const props = { ...SchemaTableProps, ..._default }
 
 export default defineComponent({
   name: 'SchemaTable',
@@ -92,8 +93,8 @@ export default defineComponent({
               total={pageable.value.total ?? 0}
               page-sizes={[10, 25, 50, 100]}
               layout="total, sizes, prev, pager, next, jumper"
-              size-change={handleSizeChange}
-              current-change={handleCurrentChange}
+              onSizeChange={handleSizeChange}
+              onCurrentChange={handleCurrentChange}
             />
           )}
         </div>
